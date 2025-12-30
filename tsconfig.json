@@ -19,8 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@/ui/*": ["./src/app/ui/*"]
+      "@/ui/*": ["./src/app/ui/*"],
+      "@/utils/*": ["./src/app/utils/*"]
     }
   },
   "include": [
@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "vitest.setup.ts"
   ],
   "exclude": ["node_modules"],
   "types": ["vitest/globals", "@testing-library/jest-dom"]
