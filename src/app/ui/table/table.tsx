@@ -90,7 +90,7 @@ const TableCaption = ({
   ...props
 }: React.HTMLAttributes<HTMLTableCaptionElement>) => (
   <caption
-    className={cn("mt-4 px-2 text-sm text-primary-600", className)}
+    className={cn("my-4 px-2 text-sm text-primary-600", className)}
     {...props}
   />
 );
