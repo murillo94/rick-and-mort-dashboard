@@ -1,15 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { PieChart as MinimalPieChart } from "react-minimal-pie-chart";
 
 import { cn } from "@/utils/cn";
+import { formatLabelPercentage } from "./pie.helpers";
 
 interface ChartDataItem {
   title: string;
   value: number;
   color: string;
 }
+
+interface PieChartContextValue {
+  selected: number | undefined;
+  setSelected: (index: number | undefined) => void;
+  hovered: number | undefined;
+  setHovered: (index: number | undefined) => void;
+}
+
+const PieChartContext = createContext<PieChartContextValue | null>(null);
+
+const usePieChartContext = () => {
+  const context = useContext(PieChartContext);
+  return context;
+};
 
 interface PieChartProps {
   data: ChartDataItem[];
@@ -25,10 +40,22 @@ const PieChart = ({
   className,
   lineWidth = 100,
   animate,
-  selected,
-  onSelect,
+  selected: externalSelected,
+  onSelect: externalOnSelect,
 }: PieChartProps) => {
-  const [hovered, setHovered] = useState<number | undefined>(undefined);
+  const [internalSelected, setInternalSelected] = useState<number | undefined>(
+    undefined
+  );
+  const [internalHovered, setInternalHovered] = useState<number | undefined>(
+    undefined
+  );
+
+  const context = usePieChartContext();
+  const selected = context?.selected ?? externalSelected ?? internalSelected;
+  const setSelected =
+    context?.setSelected ?? externalOnSelect ?? setInternalSelected;
+  const hovered = context?.hovered ?? internalHovered;
+  const setHovered = context?.setHovered ?? setInternalHovered;
 
   const dataWithHighlight = data.map((item, index) => {
     const isSelected = selected !== undefined && selected === index;
@@ -39,44 +66,69 @@ const PieChart = ({
 
     return {
       ...item,
-      style: {
-        opacity: shouldApplyOpacity ? 0.4 : 1,
-        transition: "opacity 0.2s ease",
-        cursor: "pointer",
-      },
+      ...(isSelected && {
+        style: {
+          filter: "drop-shadow(0 0 8px rgba(0, 0, 0, 0.3))",
+          transition: "all 0.2s ease",
+          cursor: "pointer",
+        },
+      }),
+      ...(!isSelected && {
+        style: {
+          opacity: shouldApplyOpacity ? 0.4 : 1,
+          transition: "opacity 0.2s ease",
+          cursor: "pointer",
+        },
+      }),
     };
+  });
+
+  const segmentShift = data.map((_, index) => {
+    const isSelected = selected !== undefined && selected === index;
+    return isSelected ? 3 : 0;
   });
 
   const handleClick = (_: unknown, segmentIndex: number) => {
     if (selected === segmentIndex) {
-      onSelect?.(undefined);
+      setSelected?.(undefined);
     } else {
-      onSelect?.(segmentIndex);
+      setSelected?.(segmentIndex);
     }
   };
 
   return (
-    <div className={cn("w-full aspect-square", className)}>
+    <div className={cn("w-full aspect-square min-h-[400px]", className)}>
       <MinimalPieChart
         data={dataWithHighlight}
-        label={({ x, y, dx, dy, dataEntry }) => (
-          <text
-            x={x}
-            y={y}
-            dx={dx}
-            dy={dy}
-            dominantBaseline="central"
-            textAnchor="middle"
-            style={{
-              fontSize: "6px",
-              fontFamily: "sans-serif",
-              filter: "drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7))",
-            }}
-            fill="white"
-          >
-            {Math.round(dataEntry.percentage) + "%"}
-          </text>
-        )}
+        segmentsShift={(index) => segmentShift[index]}
+        label={({ x, y, dx, dy, dataEntry }) => {
+          const formatted = formatLabelPercentage(dataEntry.percentage);
+
+          if (!formatted) {
+            return null;
+          }
+
+          return (
+            <text
+              x={x}
+              y={y}
+              dx={dx}
+              dy={dy}
+              dominantBaseline="central"
+              textAnchor="middle"
+              style={{
+                fontSize: formatted.fontSize,
+                fontFamily: "sans-serif",
+                fontWeight: "600",
+                filter: "drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.8))",
+                pointerEvents: "none",
+              }}
+              fill="white"
+            >
+              {formatted.percentage + "%"}
+            </text>
+          );
+        }}
         lineWidth={lineWidth}
         animate={animate}
         animationDuration={500}
@@ -89,36 +141,58 @@ const PieChart = ({
   );
 };
 
-interface LegendProps {
+interface PieChartLegendProps {
   data: ChartDataItem[];
   orientation?: "vertical" | "horizontal";
   className?: string;
   selected?: number | undefined;
   onSelect?: (index: number | undefined) => void;
+  columns?: number;
 }
 
-const Legend = ({
+const PieChartLegend = ({
   data,
   orientation = "vertical",
   className,
-  selected,
-  onSelect,
-}: LegendProps) => {
-  const [hovered, setHovered] = useState<number | undefined>(undefined);
+  selected: externalSelected,
+  onSelect: externalOnSelect,
+  columns = 1,
+}: PieChartLegendProps) => {
+  const [internalSelected, setInternalSelected] = useState<number | undefined>(
+    undefined
+  );
+  const [internalHovered, setInternalHovered] = useState<number | undefined>(
+    undefined
+  );
+
+  const context = usePieChartContext();
+  const selected = context?.selected ?? externalSelected ?? internalSelected;
+  const setSelected =
+    context?.setSelected ?? externalOnSelect ?? setInternalSelected;
+  const hovered = context?.hovered ?? internalHovered;
+  const setHovered = context?.setHovered ?? setInternalHovered;
 
   const handleClick = (index: number) => {
     if (selected === index) {
-      onSelect?.(undefined);
+      setSelected?.(undefined);
     } else {
-      onSelect?.(index);
+      setSelected?.(index);
     }
   };
 
   return (
     <div
       className={cn(
-        "flex gap-3",
-        orientation === "vertical" ? "flex-col" : "flex-row flex-wrap",
+        "grid gap-3",
+        orientation === "vertical" && columns === 1 && "grid-cols-1",
+        orientation === "vertical" &&
+          columns === 2 &&
+          "grid-cols-1 sm:grid-cols-2",
+        orientation === "vertical" &&
+          columns > 2 &&
+          "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
+        orientation === "horizontal" &&
+          "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
         className
       )}
     >
@@ -134,6 +208,7 @@ const Legend = ({
             key={`${item.title}-${index}`}
             item={item}
             isActive={!shouldDim}
+            isSelected={isSelected}
             onClick={() => handleClick(index)}
             onMouseEnter={() => setHovered(index)}
             onMouseLeave={() => setHovered(undefined)}
@@ -148,6 +223,7 @@ const Legend = ({
 interface LegendItemProps {
   item: ChartDataItem;
   isActive?: boolean;
+  isSelected?: boolean;
   className?: string;
   onClick?: () => void;
   onMouseEnter?: () => void;
@@ -157,6 +233,7 @@ interface LegendItemProps {
 const LegendItem = ({
   item,
   isActive = true,
+  isSelected = false,
   className,
   onClick,
   onMouseEnter,
@@ -165,8 +242,9 @@ const LegendItem = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-2 transition-opacity",
+        "flex items-center gap-2 transition-all duration-200 p-2 rounded-lg",
         !isActive && "opacity-40",
+        isSelected && "bg-slate-100 ring-2 ring-slate-300",
         className
       )}
       onClick={onClick}
@@ -187,7 +265,21 @@ const LegendItem = ({
   );
 };
 
-PieChart.Legend = Legend;
-PieChart.LegendItem = LegendItem;
+interface PieChartProviderProps {
+  children: React.ReactNode;
+}
 
-export { PieChart };
+const PieChartProvider = ({ children }: PieChartProviderProps) => {
+  const [selected, setSelected] = useState<number | undefined>(undefined);
+  const [hovered, setHovered] = useState<number | undefined>(undefined);
+
+  return (
+    <PieChartContext.Provider
+      value={{ selected, setSelected, hovered, setHovered }}
+    >
+      {children}
+    </PieChartContext.Provider>
+  );
+};
+
+export { PieChart, PieChartProvider, PieChartLegend };
