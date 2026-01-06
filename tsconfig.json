@@ -20,7 +20,9 @@
     ],
     "paths": {
       "@/ui/*": ["./src/app/ui/*"],
-      "@/utils/*": ["./src/app/utils/*"]
+      "@/utils/*": ["./src/app/utils/*"],
+      "@/lib/*": ["./src/app/lib/*"],
+      "@/data-access/*": ["./src/app/data-access/*"]
     }
   },
   "include": [
