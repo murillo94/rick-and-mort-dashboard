@@ -32,7 +32,7 @@ export const Nav = () => {
   };
 
   return (
-    <nav className="flex gap-2">
+    <nav className="flex gap-2 w-full justify-start">
       {tabs.map((tab) => (
         <Button
           key={tab.href}

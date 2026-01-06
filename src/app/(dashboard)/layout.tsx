@@ -8,7 +8,7 @@ interface Props {
 export default function Layout({ children }: Props) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-white">
-      <main className="flex min-h-screen w-full max-w-5xl flex-col items-center sm:items-start gap-16 p-16">
+      <main className="flex min-h-screen w-full max-w-5xl flex-col items-start gap-12 sm:gap-16 sm:p-16 p-4">
         <Typography variant="title">Rick and Morty Dashboard</Typography>
         <Nav />
         {children}

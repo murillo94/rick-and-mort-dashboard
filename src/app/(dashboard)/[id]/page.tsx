@@ -35,7 +35,7 @@ export default async function CharacterPage({ params }: PageProps) {
         </Button>
       </div>
       <div className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl shadow-lg overflow-hidden">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 p-8">
+        <div className="flex flex-row items-start gap-6 p-8">
           <div className="flex-shrink-0">
             <Avatar src={character.image} alt={character.name} size="xl" />
           </div>
