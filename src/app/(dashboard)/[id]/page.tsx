@@ -79,7 +79,7 @@ export default async function CharacterPage({ params }: PageProps) {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl border border-primary-100 p-6 transition-shadow">
+        <div className="bg-white rounded-lg border border-primary-100 p-6 transition-shadow">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
               <span className="text-xl">📍</span>
@@ -90,7 +90,7 @@ export default async function CharacterPage({ params }: PageProps) {
             {character.location.name}
           </Typography>
         </div>
-        <div className="bg-white rounded-xl border border-primary-100 p-6 transition-shadow">
+        <div className="bg-white rounded-lg border border-primary-100 p-6 transition-shadow">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
               <span className="text-xl">🌍</span>
@@ -103,7 +103,7 @@ export default async function CharacterPage({ params }: PageProps) {
         </div>
       </div>
       {character.episode.length > 0 && (
-        <div className="bg-white rounded-xl border border-primary-100 p-6">
+        <div className="bg-white rounded-lg border border-primary-100 p-6">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
               <span className="text-xl">📺</span>

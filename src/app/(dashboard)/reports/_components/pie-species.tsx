@@ -27,7 +27,7 @@ export default async function PieSpecies() {
     .sort((a, b) => b.value - a.value);
 
   return (
-    <section className="bg-white rounded-xl p-6 shadow-sm border border-slate-200 w-full">
+    <section className="bg-white rounded-lg p-6 border border-slate-200 w-full">
       <h2 className="text-xl font-semibold text-slate-900 mb-2">Species</h2>
       <p className="text-sm text-slate-600 mb-6">
         The species of the characters.
