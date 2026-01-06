@@ -12,14 +12,17 @@
   "dependencies": {
     "@apollo/client": "^4.0.11",
     "@apollo/client-integration-nextjs": "^0.14.3",
+    "@tanstack/react-table": "^8.21.3",
     "clsx": "^2.1.1",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
     "nuqs": "^2.8.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-intersection-observer": "^10.0.0",
     "react-minimal-pie-chart": "^9.1.2",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",

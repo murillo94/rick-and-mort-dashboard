@@ -1,4 +1,5 @@
 import { cn } from "@/utils/cn";
+import { forwardRef } from "react";
 
 const Table = ({
   className,
@@ -45,18 +46,21 @@ const TableFooter = ({
   />
 );
 
-const TableRow = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLTableRowElement>) => (
+const TableRow = forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement>
+>(({ className, ...props }, ref) => (
   <tr
+    ref={ref}
     className={cn(
       "border-b transition-colors hover:bg-primary-50 data-[state=selected]:bg-primary-100 border-b-primary-600/15",
       className
     )}
     {...props}
   />
-);
+));
+
+TableRow.displayName = "TableRow";
 
 const TableHead = ({
   className,

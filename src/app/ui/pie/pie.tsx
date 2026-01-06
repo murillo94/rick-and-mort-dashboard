@@ -97,7 +97,7 @@ const PieChart = ({
   };
 
   return (
-    <div className={cn("w-full aspect-square min-h-[400px]", className)}>
+    <div className={cn("w-full aspect-square max-h-[300px]", className)}>
       <MinimalPieChart
         data={dataWithHighlight}
         segmentsShift={(index) => segmentShift[index]}
@@ -183,7 +183,7 @@ const PieChartLegend = ({
   return (
     <div
       className={cn(
-        "grid gap-3",
+        "grid gap-1",
         orientation === "vertical" && columns === 1 && "grid-cols-1",
         orientation === "vertical" &&
           columns === 2 &&
@@ -256,7 +256,7 @@ const LegendItem = ({
         style={{ backgroundColor: item.color }}
       />
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-slate-800 truncate">
+        <p className="text-sm font-medium text-slate-800 truncate capitalize">
           {item.title}
         </p>
         <p className="text-xs text-slate-600">{item.value.toLocaleString()}</p>

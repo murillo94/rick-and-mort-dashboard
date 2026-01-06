@@ -1,3 +1,5 @@
+import { cn } from "@/utils/cn";
+
 import type { ReactNode } from "react";
 
 const variants = {
@@ -34,10 +36,15 @@ export type TypographyVariant = keyof typeof variants;
 interface TypographyProps {
   variant: TypographyVariant;
   children: ReactNode;
+  className?: string;
 }
 
-export const Typography = ({ variant, children }: TypographyProps) => {
+export const Typography = ({
+  variant,
+  children,
+  className: classNameProp,
+}: TypographyProps) => {
   const { tag: Tag, className } = variants[variant];
 
-  return <Tag className={className}>{children}</Tag>;
+  return <Tag className={cn(className, classNameProp)}>{children}</Tag>;
 };

@@ -4,7 +4,6 @@ import userEvent from "@testing-library/user-event";
 
 import { Button } from "./button";
 
-// Mock lucide-react
 vi.mock("lucide-react", () => ({
   Loader2: ({ className }: { className?: string }) => (
     <svg data-testid="loading-spinner" className={className}>
