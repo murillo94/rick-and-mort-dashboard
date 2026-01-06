@@ -14,7 +14,7 @@ import {
 import { Table } from "@/ui/table";
 import { Avatar } from "@/ui/avatar";
 import { Button } from "@/ui/button";
-import { InlineError } from "./error";
+import { InlineError } from "../error";
 
 import type { Character } from "@/data-access/schemas";
 

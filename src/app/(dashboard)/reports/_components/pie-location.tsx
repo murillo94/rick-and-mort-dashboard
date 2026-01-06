@@ -1,5 +1,5 @@
 import { getAllLocations } from "@/data-access/services";
-import { PieChart, PieChartProvider, PieChartLegend } from "@/ui/pie/pie";
+import { PieChart, PieChartProvider, PieChartLegend } from "@/ui/pie";
 import { randomColors } from "@/utils/colors";
 
 export default async function PieLocation() {

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
 import { InputSearch } from "./_components/input-search";
-import { CharactersTableContainer } from "./_components/characters-table-container";
+import { CharactersTableContainer } from "./_components/characters-table";
 import { LoadingCard } from "./_components/loading";
 
 import { getCharacters } from "@/data-access/services";
