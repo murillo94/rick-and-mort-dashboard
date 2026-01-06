@@ -12,6 +12,12 @@ export const { query } = registerApolloClient(() => {
       // uri: "https://rickandmortyapi.com/graphql",
       // need to have .env.local file with the API_URL, otherwise you can uncomment the above line and comment the below line
       uri: process.env.NEXT_PUBLIC_API_URL,
+      fetchOptions: {
+        cache: "force-cache",
+        next: {
+          revalidate: 120,
+        },
+      },
     }),
   });
 });
