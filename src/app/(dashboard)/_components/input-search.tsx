@@ -1,16 +1,16 @@
 "use client";
 
+import { SearchIcon, XIcon } from "lucide-react";
 import { useQueryStates, debounce } from "nuqs";
 
 import { Input } from "@/ui/input";
+import { Button } from "@/ui/button";
 
 import {
   debounceTime,
   searchParamKeys,
   searchParams,
 } from "@/utils/search-params";
-import { XIcon } from "lucide-react";
-import { Button } from "@/ui/button";
 
 export const InputSearch = () => {
   const [search, setSearch] = useQueryStates(searchParams);
@@ -32,6 +32,7 @@ export const InputSearch = () => {
   return (
     <Input
       slots={{
+        start: <SearchIcon className="size-4 text-slate-400" />,
         input: {
           placeholder: "Search characters",
           value: searchParsed,

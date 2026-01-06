@@ -21,6 +21,7 @@ function CharactersTableInner({
   const [data, setData] = useState(initialData);
   const [info, setInfo] = useState(paginationInfo);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
   const [, setPage] = useQueryState(
     searchParamKeys.page,
     parseAsInteger.withDefault(1).withOptions({ shallow: false })
@@ -32,24 +33,40 @@ function CharactersTableInner({
       return;
     }
 
+    setError(null);
+
     startTransition(async () => {
       const nextPage = info.next!;
       lastLoadedPageRef.current = nextPage;
 
-      const newData = await loadMoreCharacters({
+      const result = await loadMoreCharacters({
         page: nextPage,
         filter: {
           name: searchTerm,
         },
       });
 
-      await setPage(nextPage);
-
-      setData((prev) => [...prev, ...newData.results]);
-      setInfo(newData.info);
-      window.scrollTo({ top: window.scrollY - 200, behavior: "instant" });
+      if (result.success) {
+        await setPage(nextPage);
+        setData((prev) => [...prev, ...result.results]);
+        setInfo({
+          count: result.info.count,
+          pages: result.info.pages,
+          next: result.info.next ?? 0,
+          prev: result.info.prev ?? 0,
+        });
+        window.scrollTo({ top: window.scrollY - 200, behavior: "instant" });
+      } else {
+        setError(result.error);
+        lastLoadedPageRef.current = nextPage - 1;
+      }
     });
   }, [info.next, isPending, setPage, searchTerm]);
+
+  const handleRetry = useCallback(() => {
+    setError(null);
+    handleLoadMore();
+  }, [handleLoadMore]);
 
   return (
     <CharactersTable
@@ -58,6 +75,8 @@ function CharactersTableInner({
       hasNextPage={!!info.next}
       onLoadMore={handleLoadMore}
       isPending={isPending}
+      error={error}
+      onRetry={handleRetry}
     />
   );
 }

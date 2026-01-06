@@ -2,30 +2,47 @@
 
 import { getCharacters } from "@/data-access/services";
 
-import type { GetCharactersVariables } from "@/data-access/schemas";
+import type { Character, GetCharactersVariables } from "@/data-access/schemas";
+
+type LoadMoreResult =
+  | {
+      success: true;
+      results: Character[];
+      info: {
+        count: number;
+        pages: number;
+        next: number;
+        prev: number;
+      };
+    }
+  | {
+      success: false;
+      error: string;
+    };
 
 /**
  * Server action to load more characters
  * This keeps the data fetching on the server while allowing client-side pagination
  */
-export async function loadMoreCharacters(variables: GetCharactersVariables) {
+export async function loadMoreCharacters(
+  variables: GetCharactersVariables
+): Promise<LoadMoreResult> {
   try {
     const { characters } = await getCharacters(variables);
 
     return {
+      success: true,
       results: characters.results,
       info: characters.info,
     };
   } catch (error) {
     console.error("Failed to load more characters:", error);
     return {
-      results: [],
-      info: {
-        count: 0,
-        pages: 0,
-        next: 0,
-        prev: 0,
-      },
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to load more characters",
     };
   }
 }

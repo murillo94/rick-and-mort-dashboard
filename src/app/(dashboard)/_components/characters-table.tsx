@@ -1,5 +1,6 @@
 "use client";
 
+import { RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
@@ -12,6 +13,8 @@ import {
 
 import { Table } from "@/ui/table";
 import { Avatar } from "@/ui/avatar";
+import { Button } from "@/ui/button";
+import { InlineError } from "./error";
 
 import type { Character } from "@/data-access/schemas";
 
@@ -21,6 +24,8 @@ type CharactersTableProps = {
   hasNextPage: boolean;
   onLoadMore: () => void;
   isPending: boolean;
+  error?: string | null;
+  onRetry?: () => void;
 };
 
 const columns: ColumnDef<Character>[] = [
@@ -56,6 +61,8 @@ export function CharactersTable({
   hasNextPage,
   onLoadMore,
   isPending,
+  error,
+  onRetry,
 }: CharactersTableProps) {
   const router = useRouter();
   const table = useReactTable({
@@ -70,7 +77,7 @@ export function CharactersTable({
   const { ref: inViewRef, inView } = useInView({
     threshold: 0.1,
     rootMargin: "600px",
-    skip: !hasNextPage || isPending,
+    skip: !hasNextPage || isPending || !!error,
   });
 
   // Track scroll direction
@@ -87,10 +94,16 @@ export function CharactersTable({
 
   // Load more when in view AND scrolling down
   useEffect(() => {
-    if (inView && hasNextPage && !isPending && isScrollingDown.current) {
+    if (
+      inView &&
+      hasNextPage &&
+      !isPending &&
+      isScrollingDown.current &&
+      !error
+    ) {
       onLoadMore();
     }
-  }, [inView, hasNextPage, isPending, onLoadMore]);
+  }, [inView, hasNextPage, isPending, onLoadMore, error]);
 
   return (
     <div>
@@ -139,6 +152,15 @@ export function CharactersTable({
                     <span className="text-sm text-primary-600">
                       Loading more characters...
                     </span>
+                  </div>
+                )}
+                {error && onRetry && (
+                  <div className="flex flex-col items-center gap-3">
+                    <InlineError message={error} />
+                    <Button onClick={onRetry} variant="primary" size="sm">
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Try Again
+                    </Button>
                   </div>
                 )}
               </Table.Cell>
