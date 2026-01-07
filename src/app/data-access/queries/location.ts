@@ -1,6 +1,8 @@
 import { gql, type TypedDocumentNode } from "@apollo/client";
-import type { LocationsResponse, GetLocationsVariables } from "../schemas";
+
 import { PAGINATION_INFO_FIELDS, RESIDENT_BASIC_FIELDS } from "./shared";
+
+import type { LocationsResponse, GetLocationsVariables } from "../schemas";
 
 /**
  * Get all locations with pagination and optional filtering

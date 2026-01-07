@@ -2,11 +2,11 @@ import { getAllLocations } from "@/data-access/services";
 import { PieChart, PieChartProvider, PieChartLegend } from "@/ui/pie";
 import { randomColors } from "@/utils/colors";
 
+const colors = randomColors();
+const colorsLength = colors.length;
+
 export default async function PieLocation() {
   const locations = await getAllLocations();
-
-  const colors = randomColors();
-  const colorsLength = colors.length;
 
   const dataParsed = locations
     .filter((location) => location.residents.length > 0)

@@ -5,6 +5,7 @@ import { useQueryState, parseAsInteger } from "nuqs";
 import { CharactersTable } from "./characters-table";
 import { loadMoreCharacters } from "../../_actions/load-more-characters";
 import { searchParamKeys } from "@/utils/search-params";
+
 import type { Character, PaginationInfo } from "@/data-access/schemas";
 
 type CharactersTableContainerProps = {

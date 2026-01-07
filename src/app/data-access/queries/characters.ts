@@ -1,11 +1,13 @@
 import { gql, type TypedDocumentNode } from "@apollo/client";
+
+import { CHARACTER_FIELDS, PAGINATION_INFO_FIELDS } from "./shared";
+
 import type {
   CharactersResponse,
   CharacterResponse,
   GetCharactersVariables,
   GetCharacterVariables,
 } from "../schemas";
-import { CHARACTER_FIELDS, PAGINATION_INFO_FIELDS } from "./shared";
 
 /**
  * Get all characters with pagination and optional filtering

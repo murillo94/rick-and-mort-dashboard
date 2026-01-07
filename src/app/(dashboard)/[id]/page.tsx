@@ -7,16 +7,16 @@ import { Typography } from "@/ui/typography";
 
 import { getCharacter } from "@/data-access/services";
 
-type PageProps = {
-  params: Promise<{ id: string }>;
-};
-
 const getStatusBadgeColor = (status: string) => {
   const statusLower = status.toLowerCase();
   if (statusLower === "alive")
     return "bg-green-100 text-green-800 border-green-200";
   if (statusLower === "dead") return "bg-red-100 text-red-800 border-red-200";
   return "bg-gray-100 text-gray-800 border-gray-200";
+};
+
+type PageProps = {
+  params: Promise<{ id: string }>;
 };
 
 export default async function CharacterPage({ params }: PageProps) {

@@ -13,6 +13,8 @@ export default defineConfig({
     alias: {
       "@/ui": path.resolve(__dirname, "./src/app/ui"),
       "@/utils": path.resolve(__dirname, "./src/app/utils"),
+      "@/data-access": path.resolve(__dirname, "./src/app/data-access"),
+      "@/lib": path.resolve(__dirname, "./src/app/lib"),
     },
   },
 });

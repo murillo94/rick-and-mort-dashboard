@@ -2,6 +2,9 @@ import { getAllCharacters } from "@/data-access/services";
 import { PieChart, PieChartProvider, PieChartLegend } from "@/ui/pie";
 import { randomColors } from "@/utils/colors";
 
+const colors = randomColors();
+const colorsLength = colors.length;
+
 export default async function PieSpecies() {
   const characters = await getAllCharacters();
 
@@ -13,9 +16,6 @@ export default async function PieSpecies() {
     },
     {}
   );
-
-  const colors = randomColors();
-  const colorsLength = colors.length;
 
   const dataParsed = Object.entries(speciesCount)
     .filter(([, count]) => count > 0)
