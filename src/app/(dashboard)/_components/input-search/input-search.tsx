@@ -1,33 +1,14 @@
 "use client";
 
 import { SearchIcon, XIcon } from "lucide-react";
-import { useQueryStates, debounce } from "nuqs";
 
 import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
 
-import {
-  debounceTime,
-  searchParamKeys,
-  searchParams,
-} from "@/utils/search-params";
+import { useInputSearch } from "./use-input-search";
 
 export const InputSearch = () => {
-  const [search, setSearch] = useQueryStates(searchParams);
-
-  const searchParsed = String(search[searchParamKeys.characters]) ?? "";
-
-  const change = (value: string, canDebounce?: boolean) => {
-    setSearch(
-      {
-        [searchParamKeys.characters]: value,
-        [searchParamKeys.page]: 1,
-      },
-      {
-        limitUrlUpdates: canDebounce ? debounce(debounceTime) : undefined,
-      }
-    );
-  };
+  const { state, handler } = useInputSearch();
 
   return (
     <Input
@@ -41,40 +22,26 @@ export const InputSearch = () => {
         ),
         input: {
           placeholder: "Search characters",
-          value: searchParsed,
+          value: state.searchParsed,
           onChange: (e) => {
             const value = e.target.value;
-            setSearch(
-              {
-                [searchParamKeys.characters]: value,
-                [searchParamKeys.page]: 1,
-              },
-              {
-                limitUrlUpdates:
-                  value === "" ? undefined : debounce(debounceTime),
-              }
-            );
+            handler.change(value);
           },
           onKeyPress: (e) => {
             if (e.key === "Enter") {
               const value = (e.target as HTMLInputElement).value;
-              change(value, false);
+              handler.change(value, false);
             }
           },
         },
         end:
-          searchParsed.length > 0 ? (
+          state.searchParsed.length > 0 ? (
             <Button
               iconOnly
               variant="ghost"
               size="sm"
               className="p-0"
-              onClick={() => {
-                setSearch({
-                  [searchParamKeys.characters]: "",
-                  [searchParamKeys.page]: 1,
-                });
-              }}
+              onClick={handler.clear}
             >
               <XIcon data-testid="x-icon" aria-hidden className="size-4" />
               <span className="sr-only">Clear search</span>

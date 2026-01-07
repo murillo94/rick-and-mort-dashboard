@@ -1,24 +1,22 @@
-"use client";
-
 import { useCallback, useState, useTransition, useRef } from "react";
 import { useQueryState, parseAsInteger } from "nuqs";
-import { CharactersTable } from "./characters-table";
+
 import { loadMoreCharacters } from "../../_actions/load-more-characters";
 import { searchParamKeys } from "@/utils/search-params";
 
 import type { Character, PaginationInfo } from "@/data-access/schemas";
 
-type CharactersTableContainerProps = {
+export interface CharactersTableProps {
   initialData: Character[];
   paginationInfo: PaginationInfo;
   searchTerm: string;
-};
+}
 
-function CharactersTableInner({
+export const useCharactersTable = ({
   initialData,
   paginationInfo,
   searchTerm,
-}: CharactersTableContainerProps) {
+}: CharactersTableProps) => {
   const [data, setData] = useState(initialData);
   const [info, setInfo] = useState(paginationInfo);
   const [isPending, startTransition] = useTransition();
@@ -29,7 +27,7 @@ function CharactersTableInner({
   );
   const lastLoadedPageRef = useRef<number>(1);
 
-  const handleLoadMore = useCallback(() => {
+  const loadMore = useCallback(() => {
     if (!info.next || isPending || lastLoadedPageRef.current === info.next) {
       return;
     }
@@ -64,25 +62,21 @@ function CharactersTableInner({
     });
   }, [info.next, isPending, setPage, searchTerm]);
 
-  const handleRetry = useCallback(() => {
+  const retry = useCallback(() => {
     setError(null);
-    handleLoadMore();
-  }, [handleLoadMore]);
+    loadMore();
+  }, [loadMore]);
 
-  return (
-    <CharactersTable
-      data={data}
-      totalCount={info.count}
-      hasNextPage={!!info.next}
-      onLoadMore={handleLoadMore}
-      isPending={isPending}
-      error={error}
-      onRetry={handleRetry}
-    />
-  );
-}
-
-export function CharactersTableContainer(props: CharactersTableContainerProps) {
-  // Using key to reset state when search term changes
-  return <CharactersTableInner key={props.searchTerm} {...props} />;
-}
+  return {
+    state: {
+      data,
+      info,
+      isPending,
+      error,
+    },
+    handler: {
+      loadMore,
+      retry,
+    },
+  };
+};

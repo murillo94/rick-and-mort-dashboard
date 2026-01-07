@@ -70,4 +70,5 @@ export const getLocationVariablesSchema = z.object({
 });
 
 export type LocationsResponse = z.infer<typeof locationsResponseSchema>;
+export type Locations = LocationsResponse["locations"]["results"];
 export type GetLocationsVariables = z.infer<typeof getLocationsVariablesSchema>;

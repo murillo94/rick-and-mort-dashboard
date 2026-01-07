@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ChartPie, TableProperties } from "lucide-react";
 
 import { Button } from "@/ui/button";
+
+import { useNav } from "./use-nav";
 
 const tabs = [
   {
@@ -20,23 +21,14 @@ const tabs = [
 ];
 
 export const Nav = () => {
-  const pathname = usePathname();
-
-  const isActive = (href: string) => {
-    if (href === "/") {
-      // Match "/" and any "/[id]" routes (e.g., "/1", "/2", etc.)
-      return pathname === "/" || /^\/\d+$/.test(pathname);
-    }
-
-    return pathname === href;
-  };
+  const { handler } = useNav();
 
   return (
     <nav className="flex gap-2 w-full justify-start">
       {tabs.map((tab) => (
         <Button
           key={tab.href}
-          variant={isActive(tab.href) ? "secondary" : "ghost"}
+          variant={handler.isActive(tab.href) ? "secondary" : "ghost"}
           size="sm"
           slots={{ start: <tab.icon className="size-4 text-primary-600" /> }}
           asChild

@@ -1,2 +1,2 @@
 export * from "./characters-table";
-export * from "./characters-table-container";
+export * from "./characters-table-content";

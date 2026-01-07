@@ -7,6 +7,7 @@ import {
   type GetCharacterVariables,
   type CharactersResponse,
   type CharacterResponse,
+  type Characters,
 } from "../schemas";
 
 /**
@@ -78,7 +79,7 @@ export async function getCharacter(
  */
 export async function getAllCharacters(
   filter?: GetCharactersVariables["filter"]
-): Promise<CharactersResponse["characters"]["results"]> {
+): Promise<Characters> {
   try {
     const firstPage = await getCharacters({ page: 1, filter });
     const totalPages = firstPage.characters.info.pages;

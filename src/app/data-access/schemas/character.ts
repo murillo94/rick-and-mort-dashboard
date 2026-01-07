@@ -89,6 +89,7 @@ export const getCharacterVariablesSchema = z.object({
 
 export type Character = z.infer<typeof characterSchema>;
 export type CharactersResponse = z.infer<typeof charactersResponseSchema>;
+export type Characters = CharactersResponse["characters"]["results"];
 export type CharacterResponse = z.infer<typeof characterResponseSchema>;
 export type GetCharactersVariables = z.infer<
   typeof getCharactersVariablesSchema

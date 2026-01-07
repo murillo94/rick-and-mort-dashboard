@@ -6,7 +6,7 @@ import { render, screen } from "@testing-library/react";
 import { withNuqsTestingAdapter } from "nuqs/adapters/testing";
 
 import { GET_CHARACTERS } from "@/data-access/queries/characters";
-import { CharactersTableContainer } from "./characters-table-container";
+import { CharactersTable } from "./characters-table";
 
 import type { Character } from "@/data-access/schemas";
 
@@ -76,7 +76,7 @@ describe("Characters GraphQL Integration", () => {
 
     render(
       <ApolloProvider client={mockClient}>
-        <CharactersTableContainer
+        <CharactersTable
           initialData={mockCharactersData}
           paginationInfo={{ count: 3, pages: 1, next: 0, prev: 0 }}
           searchTerm=""
@@ -133,7 +133,7 @@ describe("Characters GraphQL Integration", () => {
 
     render(
       <ApolloProvider client={mockClient}>
-        <CharactersTableContainer
+        <CharactersTable
           initialData={filteredData}
           paginationInfo={{ count: 1, pages: 1, next: 0, prev: 0 }}
           searchTerm="rick"
@@ -173,7 +173,7 @@ describe("Characters GraphQL Integration", () => {
 
     render(
       <ApolloProvider client={mockClient}>
-        <CharactersTableContainer
+        <CharactersTable
           initialData={[]}
           paginationInfo={{ count: 0, pages: 0, next: 0, prev: 0 }}
           searchTerm=""
@@ -209,7 +209,7 @@ describe("Characters GraphQL Integration", () => {
 
     render(
       <ApolloProvider client={mockClient}>
-        <CharactersTableContainer
+        <CharactersTable
           initialData={mockCharactersData}
           paginationInfo={{ count: 3, pages: 1, next: 0, prev: 0 }}
           searchTerm=""
@@ -239,7 +239,7 @@ describe("Characters GraphQL Integration", () => {
 
     render(
       <ApolloProvider client={mockClient}>
-        <CharactersTableContainer
+        <CharactersTable
           initialData={[]}
           paginationInfo={{ count: 0, pages: 0, next: 0, prev: 0 }}
           searchTerm=""
@@ -262,7 +262,7 @@ describe("Characters GraphQL Integration", () => {
 
     render(
       <ApolloProvider client={mockClient}>
-        <CharactersTableContainer
+        <CharactersTable
           initialData={[]}
           paginationInfo={{ count: 0, pages: 0, next: 0, prev: 0 }}
           searchTerm=""

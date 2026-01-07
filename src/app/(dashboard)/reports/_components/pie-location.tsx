@@ -1,3 +1,4 @@
+import { Locations } from "@/data-access/schemas";
 import { getAllLocations } from "@/data-access/services";
 import { PieChart, PieChartProvider, PieChartLegend } from "@/ui/pie";
 import { randomColors } from "@/utils/colors";
@@ -5,10 +6,8 @@ import { randomColors } from "@/utils/colors";
 const colors = randomColors();
 const colorsLength = colors.length;
 
-export default async function PieLocation() {
-  const locations = await getAllLocations();
-
-  const dataParsed = locations
+const parseData = (locations: Locations) => {
+  return locations
     .filter((location) => location.residents.length > 0)
     .map((location, index) => ({
       title: location.name,
@@ -16,6 +15,12 @@ export default async function PieLocation() {
       color: colors[index % colorsLength],
     }))
     .sort((a, b) => b.value - a.value);
+};
+
+export default async function PieLocation() {
+  const locations = await getAllLocations();
+
+  const dataParsed = parseData(locations);
 
   return (
     <section className="bg-white rounded-lg p-6 border border-slate-200 w-full">

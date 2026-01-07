@@ -23,6 +23,15 @@ A **Next.js dashboard** that consumes a public **GraphQL API** to display and se
    ```
 3. Open **[http://localhost:3000](http://localhost:3000)** in your browser to test the app.
 
+
+## Running test
+
+This project use [vitest](https://vitest.dev/) to build unit and integration tests, to start the tests you can run:
+
+  ```bash
+   pnpm test
+   ```
+
 ---
 
 ## Introduction
