@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
-import PieLocation from "./_components/pie-location";
-import PieSpecies from "./_components/pie-species";
+import PieLocation from "./_components/pie-location/pie-location";
+import PieSpecies from "./_components/pie-species/pie-species";
 import { LoadingCard } from "../_components/loading";
 
 export default function Reports() {
