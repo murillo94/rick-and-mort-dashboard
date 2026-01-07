@@ -113,6 +113,4 @@ I built everything from scratch primitive components to full pages without copyi
 
 ## Table a11y
 
-<p align="center" width="100%">
-  <video src="./public/table-a11y.mp4" width="100%" controls></video>
-</p>
+https://github.com/user-attachments/assets/b1cdb457-d5fd-4314-85d0-6bb12c8c355a
