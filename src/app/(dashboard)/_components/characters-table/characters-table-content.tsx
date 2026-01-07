@@ -98,7 +98,6 @@ export const CharactersTableContent = ({
             <Table.Row
               key={row.id}
               onClick={() => handler.navigateToCharacter(row.original.id!)}
-              className="cursor-pointer"
             >
               {row.getVisibleCells().map((cell) => (
                 <Table.Cell key={cell.id}>

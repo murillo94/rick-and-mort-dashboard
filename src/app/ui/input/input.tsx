@@ -18,7 +18,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         className={cn(
-          "flex w-full items-center gap-2 rounded-lg border border-primary-600/15 bg-white p-2 text-sm text-primary-800 outline-none focus-within:ring-2 focus-within:ring-primary-400 transition-shadow",
+          "flex w-full items-center gap-2 rounded-lg border border-primary-600/15 bg-white p-2 text-sm text-primary-800 outline-none focus-within:ring-2 focus-within:ring-primary-500 transition-shadow",
           className
         )}
       >
