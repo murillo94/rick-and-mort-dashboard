@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Rick & Morty Dashboard
 
-## Getting Started
+A **Next.js dashboard** that consumes a public **GraphQL API** to display and search paginated data using an **infinitely scrolling table** and a **pie chart**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Starting the Application
+
+> This project uses **[pnpm](https://pnpm.io/installation#prerequisites)**, so make sure it’s installed. If not, install it using one of the commands below:
+>
+> * `npm install -g pnpm@latest-10`
+> * `brew install pnpm` (macOS)
+
+1. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+2. Start the dev server:
+
+   ```bash
+   pnpm dev
+   ```
+3. Open **[http://localhost:3000](http://localhost:3000)** in your browser to test the app.
+
+---
+
+## Introduction
+
+### Pages Implemented
+
+1. **Home (List)**
+2. **Reports**
+3. **Character Detail**
+
+### Features by Page
+
+* **Home:**
+  Users can search characters by name. Clicking a row navigates to the **Character Detail** page, where full character information is displayed.
+
+* **Reports:**
+  Displays aggregated information about **species** and **locations** using a **pie chart** visualization.
+
+* **Character Detail:**
+  Shows full details for the selected character, including name, gender, life status, episodes, and more.
+
+P.S.: All filters are managed via **URL search parameters**, making them easy to share. This approach relies more on the browser than internal component state, giving the application a more **native and predictable** feel.
+
+---
+
+## Architecture
+
+```text
+├── public                          # static assets
+├── src                             # source files
+    ├── (dashboard)                 # routes/screens
+    ├── data-access                 # GraphQL queries, Zod schema validation, API/services/server logic
+    ├── lib                         # Apollo Client setup
+    ├── ui                          # primitive UI components
+    ├── utils                       # shared helpers
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To improve readability and maintainability, the project follows **DDD (Domain-Driven Design)** principles, keeping domain logic as close as possible to where it's used.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Component Structure
 
-## Learn More
+* **`ui/` folder:**
+  Contains primitive, reusable components (dumb/presentational components). These are meant to be composed into higher level components and reused across the application.
 
-To learn more about Next.js, take a look at the following resources:
+* **`_components/` folder:**
+  Follows Next.js conventions and contains components with logic and data fetching. These are typically tied closely to a specific page and are not intended to be globally reusable.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Design Decisions
 
-## Deploy on Vercel
+I built everything from scratch—from primitive components to full pages without copying code from external templates. The goal was to keep the interface **clean and focused**, showing only relevant information with **solid colors** and minimal distractions.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Relevant Technologies
+
+* [Next.js](https://nextjs.org/)
+* [Apollo GraphQL](https://www.apollographql.com/)
+* [nuqs](https://nuqs.dev/)
+* [Zod](https://zod.dev/)
+* [Tailwind CSS](https://tailwindcss.com/)
