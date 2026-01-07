@@ -85,7 +85,7 @@ To improve readability and maintainability, the project follows **DDD (Domain-Dr
 
 ## Design Decisions
 
-I built everything from scratch—from primitive components to full pages without copying code from external templates. The goal was to keep the interface **clean and focused**, showing only relevant information with **solid colors** and minimal distractions.
+I built everything from scratch primitive components to full pages without copying code from external templates. The goal was to keep the interface **clean and focused**, showing only relevant information with **solid colors** and minimal distractions.
 
 ---
 
@@ -96,3 +96,23 @@ I built everything from scratch—from primitive components to full pages withou
 * [nuqs](https://nuqs.dev/)
 * [Zod](https://zod.dev/)
 * [Tailwind CSS](https://tailwindcss.com/)
+
+## Screenshots
+
+### Desktop
+
+  | List | Character | Reports | Error |
+  | ---- | :-----: | ----: | ----: |
+  | <img src="public/list-desktop.png" /> | <img src="public/character-desktop.png" /> | <img src="public/reports-desktop.png" /> | <img src="public/error-desktop.png" /> |
+
+### Mobile
+
+  | List | Character | Reports | Error |
+  | ---- | :-----: | ----: | ----: |
+  | <img src="public/list-mobile.png" /> | <img src="public/character-mobile.png" /> | <img src="public/reports-mobile.png" /> | <img src="public/error-mobile.png" /> |
+
+## Table a11y
+
+<p align="center" width="100%">
+  <video src="./public/table-a11y.mp4" width="100%" controls></video>
+</p>
